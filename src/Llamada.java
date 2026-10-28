@@ -2,22 +2,24 @@ public class Llamada {
     private int numeroOrigen;
     private int numeroDestino;
     private int duracion;
-    private Franja franja;
+    private int franja;
+    private boolean isLocal;
 
     private double coste = 0;
 
-    public Llamada(int numeroOrigen, int numeroDestino, int duracion, Franja franja) {
+    public Llamada(int numeroOrigen, int numeroDestino, int duracion, int franja, boolean isLocal) {
         this.numeroOrigen = numeroOrigen;
         this.numeroDestino = numeroDestino;
         this.duracion = duracion;
         this.franja = franja;
+        this.isLocal = isLocal;
 
         calcularCoste();
     }
 
     @Override
     public String toString() {
-        return numeroOrigen + " -> " + numeroDestino + " | " + duracion + "s | " + franja.toString() + " | " + coste + "€";
+        return numeroOrigen + " -> " + numeroDestino + " | " + duracion + "s | " + franja + " | " + (isLocal ? "LOCAL" : "PROVINCIAL")+ " | " + coste + "€";
     }
 
     public int getNumeroOrigen() {
@@ -44,11 +46,11 @@ public class Llamada {
         this.duracion = duracion;
     }
 
-    public Franja getFranja() {
+    public int getFranja() {
         return franja;
     }
 
-    public void setFranja(Franja franja) {
+    public void setFranja(int franja) {
         this.franja = franja;
     }
 
@@ -57,11 +59,15 @@ public class Llamada {
     }
 
     public void calcularCoste() {
-        switch (franja) {
-            case LOCAL -> coste = 0.15 * duracion;
-            case B1 -> coste = 0.20 * duracion;
-            case B2 -> coste = 0.25 * duracion;
-            case B3 -> coste = 0.30 * duracion;
+        if (isLocal) {
+            coste = 0.15 * duracion;
+        } else {
+            switch (franja) {
+                case 1 -> coste = 0.20 * duracion;
+                case 2 -> coste = 0.25 * duracion;
+                case 3 -> coste = 0.30 * duracion;
+                default -> coste = 0.15 * duracion;
+            }
         }
     }
 }
