@@ -1,4 +1,10 @@
 public class Llamada {
+
+    public static final double PRECIO_LOCAL = 0.15;
+    public static final double PRECIO_BANDA_1 = 0.20;
+    public static final double PRECIO_BANDA_2 = 0.25;
+    public static final double PRECIO_BANDA_3 = 0.30;
+
     private int numeroOrigen;
     private int numeroDestino;
     private int duracion;
@@ -60,13 +66,13 @@ public class Llamada {
 
     public void calcularCoste() {
         if (isLocal) {
-            coste = 0.15 * duracion;
+            coste = PRECIO_LOCAL * duracion;
         } else {
             switch (franja) {
-                case 1 -> coste = 0.20 * duracion;
-                case 2 -> coste = 0.25 * duracion;
-                case 3 -> coste = 0.30 * duracion;
-                default -> coste = 0.15 * duracion;
+                case 1 -> coste = PRECIO_BANDA_1 * duracion;
+                case 2 -> coste = PRECIO_BANDA_2 * duracion;
+                case 3 -> coste = PRECIO_BANDA_3 * duracion;
+                default -> coste = PRECIO_LOCAL * duracion;
             }
         }
     }
